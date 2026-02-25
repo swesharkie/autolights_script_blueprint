@@ -1,0 +1,4319 @@
+blueprint:
+  name: Set lights Script
+  description: Set designated lights to specificed setting
+  domain: script
+  input:
+    Global:
+      name: Global settings for light brightness overrides
+      description: "Select entities for overrides to light-level.\nPlease create input_number entities first.\n"
+      collapsed: false
+      input:
+        light_sensor:
+          name: Light Sensor
+          description: "Select the input_number driven by the rooms light sensor.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        override_daytime:
+          name: Daytime Override
+          description: "Select the input_number that controls brightness override for daytime.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        override_eveningtime:
+          name: Eveningtime Override
+          description: "Select the input_number that controls brightness override for eveningtime.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        override_nighttime:
+          name: Nighttime Override
+          description: "Select the input_number that controls brightness override for nighttime.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        transition:
+          name: Light Transition
+          description: "Input the time for transition in seconds.\n"
+          default: 2
+          selector:
+            number:
+              min: 0
+              max: 3600
+        presence_daytime_enable:
+          name: Presence Override Day
+          description: "Enable Presence override config for day.\n"
+          default: false
+          selector:
+            boolean:
+        override_presence_daytime:
+          name: Presence Override Day
+          description: "Select the input_number that controls brightness override for presence during Day.\n"
+          default: ''
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        presence_eveningtime_enable:
+          name: Presence Override Evening
+          description: "Enable Presence override config for evening.\n"
+          default: false
+          selector:
+            boolean:
+        override_presence_eveningtime:
+          name: Presence Override Evening
+          description: "Select the input_number that controls brightness override for presence during Evening.\n"
+          default: ''
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        presence_nighttime_enable:
+          name: Presence Override Night
+          description: "Enable Presence override config for night.\n"
+          default: false
+          selector:
+            boolean:
+        override_presence_nighttime:
+          name: Presence Override Night
+          description: "Select the input_number that controls brightness override for presence during Night.\n"
+          default: ''
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        special_scene:
+          name: Enable config of Special Scene
+          description: "If you require an additional scene besides day, evening and night then enable this setting.\n"
+          default: false
+          selector:
+            boolean:
+        override_special_scene:
+          name: Special Scene Override
+          description: "Select the input_number that controls brightness override for Special Scene, if selected.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        presence_special_scene_enable:
+          name: Presence Override Special Scene
+          description: "Enable Presence override config for special scene.\n"
+          default: false
+          selector:
+            boolean:
+        override_presence_special_scene:
+          name: Presence Override Special Scene
+          description: "Select the input_number that controls brightness override for presence during Special Scene, if selected.\n"
+          default: ''
+          selector:
+            entity:
+              filter:
+                - domain: input_number
+              multiple: false
+        special_scene_name:
+          name: Name of Special Scene
+          description: "If you enabled Special Scene, give it a name that will be selectable when script runs.\n"
+          default: "None"
+          selector:
+            text:
+    Light_1:
+      name: Settings for light 1
+      description: "Fill in the fields below to set the configuration for light 1.\n"
+      collapsed: true
+      input:
+        light_1_entity:
+          name: Light
+          description: "Select the entity of light 1.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_1_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_1_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_1_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_1_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_1_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_1_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_1_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_1_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_1_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_1_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_1_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_1_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_1_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_1_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_1_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_1_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_1_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_1_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_1_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_1_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_1_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_1_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_1_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_1_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_1_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    Light_2:
+      name: Settings for light 2
+      description: "Fill in the fields below to set the configuration for light 2.\n"
+      collapsed: true
+      input:
+        light_2_entity:
+          name: Light
+          description: "Select the entity of light 2.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_2_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_2_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_2_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_2_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_2_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_2_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_2_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_2_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_2_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_2_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_2_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_2_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_2_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_2_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_2_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_2_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_2_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_2_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_2_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_2_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_2_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_2_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_2_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_2_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_2_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_3:
+      name: Settings for light 3
+      description: "Fill in the fields below to set the configuration for light 3.\n"
+      collapsed: true
+      input:
+        light_3_entity:
+          name: Light
+          description: "Select the entity of light 3.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_3_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_3_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_3_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_3_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_3_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_3_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_3_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_3_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_3_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_3_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_3_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_3_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_3_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_3_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_3_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_3_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_3_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_3_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_3_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_3_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_3_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_3_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_3_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_3_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_3_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_4:
+      name: Settings for light 4
+      description: "Fill in the fields below to set the configuration for light 4.\n"
+      collapsed: true
+      input:
+        light_4_entity:
+          name: Light
+          description: "Select the entity of light 4.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_4_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_4_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_4_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_4_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_4_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_4_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_4_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_4_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_4_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_4_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_4_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_4_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_4_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_4_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_4_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_4_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_4_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_4_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_4_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_4_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_4_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_4_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_4_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_4_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_4_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_5:
+      name: Settings for light 5
+      description: "Fill in the fields below to set the configuration for light 5.\n"
+      collapsed: true
+      input:
+        light_5_entity:
+          name: Light
+          description: "Select the entity of light 5.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_5_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_5_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_5_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_5_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_5_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_5_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_5_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_5_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_5_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_5_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_5_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_5_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_5_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_5_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_5_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_5_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_5_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_5_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_5_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_5_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_5_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_5_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_5_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_5_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_5_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_6:
+      name: Settings for light 6
+      description: "Fill in the fields below to set the configuration for light 6.\n"
+      collapsed: true
+      input:
+        light_6_entity:
+          name: Light
+          description: "Select the entity of light 6.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_6_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_6_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_6_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_6_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_6_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_6_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_6_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_6_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_6_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_6_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_6_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_6_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_6_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_6_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_6_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_6_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_6_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_6_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_6_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_6_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_6_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_6_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_6_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_6_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_6_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_7:
+      name: Settings for light 7
+      description: "Fill in the fields below to set the configuration for light 7.\n"
+      collapsed: true
+      input:
+        light_7_entity:
+          name: Light
+          description: "Select the entity of light 7.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_7_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_7_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_7_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_7_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_7_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_7_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_7_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_7_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_7_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_7_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_7_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_7_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_7_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_7_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_7_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_7_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_7_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_7_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_7_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_7_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_7_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_7_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_7_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_7_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_7_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_8:
+      name: Settings for light 8
+      description: "Fill in the fields below to set the configuration for light 8.\n"
+      collapsed: true
+      input:
+        light_8_entity:
+          name: Light
+          description: "Select the entity of light 8.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_8_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_8_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_8_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_8_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_8_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_8_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_8_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_8_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_8_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_8_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_8_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_8_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_8_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_8_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_8_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_8_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_8_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_8_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_8_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_8_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_8_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_8_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_8_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_8_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_8_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_9:
+      name: Settings for light 9
+      description: "Fill in the fields below to set the configuration for light 9.\n"
+      collapsed: true
+      input:
+        light_9_entity:
+          name: Light
+          description: "Select the entity of light 9.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_9_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_9_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_9_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_9_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_9_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_9_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_9_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_9_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_9_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_9_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_9_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_9_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_9_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_9_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_9_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_9_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_9_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_9_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_9_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_9_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_9_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_9_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_9_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_9_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_9_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+    light_10:
+      name: Settings for light 10
+      description: "Fill in the fields below to set the configuration for light 10.\n"
+      collapsed: true
+      input:
+        light_10_entity:
+          name: Light
+          description: "Select the entity of light 10.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                - domain: light
+              multiple: false
+        light_10_delimiter_for_hass_stupidity_daytime:
+          name: ---Daytime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Daytime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Daytime----------------"
+        light_10_brightness_daytime:
+          name: Daytime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_10_scene_method_daytime:
+          name: Daytime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_10_scene_data_selector_daytime:
+          name: Daytime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_10_scene_daytime:
+          name: Daytime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_theme_daytime:
+          name: Daytime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_rgb_color_daytime:
+          name: Daytime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_10_temp_daytime:
+          name: Daytime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_10_delimiter_for_hass_stupidity_eveningtime:
+          name: ---Eveningtime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Eveningtime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Eveningtime----------------"
+        light_10_brightness_eveningtime:
+          name: Eveningtime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_10_scene_method_eveningtime:
+          name: Eveningtime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_10_scene_data_selector_eveningtime:
+          name: Eveningtime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_10_scene_eveningtime:
+          name: Eveningtime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_theme_eveningtime:
+          name: Eveningtime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_rgb_color_eveningtime:
+          name: Eveningtime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_10_temp_eveningtime:
+          name: Eveningtime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_10_delimiter_for_hass_stupidity_nighttime:
+          name: ---Nighttime---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Nighttime----------------"
+          selector:
+            select:
+              options:
+                - "----------------Nighttime----------------"
+        light_10_brightness_nighttime:
+          name: Nighttime brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_10_scene_method_nighttime:
+          name: Nighttime Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_10_scene_data_selector_nighttime:
+          name: Nighttime Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_10_scene_nighttime:
+          name: Nighttime Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_theme_nighttime:
+          name: Nighttime Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_rgb_color_nighttime:
+          name: Nighttime Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_10_temp_nighttime:
+          name: Nighttime Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+        light_10_delimiter_for_hass_stupidity_special_scene:
+          name: ---Special Scene---
+          description: "I'm just a delimiter in an attempt to make config a little more user-friendly.\n"
+          default: "----------------Special Scene----------------"
+          selector:
+            select:
+              options:
+                - "----------------Special Scene----------------"
+        light_10_brightness_special_scene:
+          name: Special Scene brightness for light
+          description: "Input the lightlevel, between 0 (off) and 255 (full).\n"
+          default: 0
+          selector:
+            number:
+              min: 0
+              max: 255
+        light_10_scene_method_special_scene:
+          name: Special Scene Scene method for light
+          description: "Select how scenes are applied to the light, if any scene is required.\n"
+          default: 'none'
+          selector:
+            select:
+              options:
+                - label: None
+                  value: none
+                - label: Selector
+                  value: selector
+                - label: Scene
+                  value: scene_action
+        light_10_scene_data_selector_special_scene:
+          name: Special Scene Scene data
+          description: "Select selector if scene method is selector, otherwhise leave blank.\n"
+          default: 'none'
+          selector:
+            entity:
+              filter:
+                domain: select
+              multiple: false
+        light_10_scene_special_scene:
+          name: Special Scene Scene
+          description: "Input scene entity_id if scene method is scene, or the selector option to select.\nIf no scene is required, leave as none\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_theme_special_scene:
+          name: Special Scene Light Scene
+          description: "If light has built in scene instead of selector or scene apply. Input it here.\n"
+          default: 'none'
+          selector:
+            text:
+        light_10_rgb_color_special_scene:
+          name: Special Scene Light Color
+          description: "Set light color, leave blank if it interferes with scene.\nInput as rgb color.\n"
+          default: 'none'
+          selector:
+            color_rgb:
+        light_10_temp_special_scene:
+          name: Special Scene Light Temperature
+          description: "Set light temperature, if prefered over color.\nSame light can have color at one time a day and temperature another but not both at the same time.\n"
+          default: 'none'
+          selector:
+            color_temp:
+              unit: kelvin
+              min: 2202
+              max: 4000
+
+variables:
+  presence_override_daytime_enabled: !input presence_daytime_enable
+  presence_override_eveningtime_enabled: !input presence_eveningtime_enable
+  presence_override_nighttime_enabled: !input presence_nighttime_enable
+  presence_override_special_scene_enabled: !input presence_special_scene_enable
+  presence_override_daytime: !input override_presence_daytime
+  presence_override_eveningtime: !input override_presence_eveningtime
+  presence_override_nighttime: !input override_presence_nighttime
+  presence_override_special_scene: !input override_presence_special_scene
+  light_sensor: !input light_sensor
+  override_daytime: !input override_daytime
+  override_eveningtime: !input override_eveningtime
+  override_nighttime: !input override_nighttime
+  override_special_scene: !input override_special_scene
+  light_1_brightness_daytime: !input light_1_brightness_daytime
+  light_2_brightness_daytime: !input light_2_brightness_daytime
+  light_3_brightness_daytime: !input light_3_brightness_daytime
+  light_4_brightness_daytime: !input light_4_brightness_daytime
+  light_5_brightness_daytime: !input light_5_brightness_daytime
+  light_6_brightness_daytime: !input light_6_brightness_daytime
+  light_7_brightness_daytime: !input light_7_brightness_daytime
+  light_8_brightness_daytime: !input light_8_brightness_daytime
+  light_9_brightness_daytime: !input light_9_brightness_daytime
+  light_10_brightness_daytime: !input light_10_brightness_daytime
+  light_1_brightness_eveningtime: !input light_1_brightness_eveningtime
+  light_2_brightness_eveningtime: !input light_2_brightness_eveningtime
+  light_3_brightness_eveningtime: !input light_3_brightness_eveningtime
+  light_4_brightness_eveningtime: !input light_4_brightness_eveningtime
+  light_5_brightness_eveningtime: !input light_5_brightness_eveningtime
+  light_6_brightness_eveningtime: !input light_6_brightness_eveningtime
+  light_7_brightness_eveningtime: !input light_7_brightness_eveningtime
+  light_8_brightness_eveningtime: !input light_8_brightness_eveningtime
+  light_9_brightness_eveningtime: !input light_9_brightness_eveningtime
+  light_10_brightness_eveningtime: !input light_10_brightness_eveningtime
+  light_1_brightness_nighttime: !input light_1_brightness_nighttime
+  light_2_brightness_nighttime: !input light_2_brightness_nighttime
+  light_3_brightness_nighttime: !input light_3_brightness_nighttime
+  light_4_brightness_nighttime: !input light_4_brightness_nighttime
+  light_5_brightness_nighttime: !input light_5_brightness_nighttime
+  light_6_brightness_nighttime: !input light_6_brightness_nighttime
+  light_7_brightness_nighttime: !input light_7_brightness_nighttime
+  light_8_brightness_nighttime: !input light_8_brightness_nighttime
+  light_9_brightness_nighttime: !input light_9_brightness_nighttime
+  light_10_brightness_nighttime: !input light_10_brightness_nighttime
+  light_1_brightness_special_scene: !input light_1_brightness_special_scene
+  light_2_brightness_special_scene: !input light_2_brightness_special_scene
+  light_3_brightness_special_scene: !input light_3_brightness_special_scene
+  light_4_brightness_special_scene: !input light_4_brightness_special_scene
+  light_5_brightness_special_scene: !input light_5_brightness_special_scene
+  light_6_brightness_special_scene: !input light_6_brightness_special_scene
+  light_7_brightness_special_scene: !input light_7_brightness_special_scene
+  light_8_brightness_special_scene: !input light_8_brightness_special_scene
+  light_9_brightness_special_scene: !input light_9_brightness_special_scene
+  light_10_brightness_special_scene: !input light_10_brightness_special_scene
+  special_scene_enabled: !input special_scene
+
+fields:
+  scene_selection:
+    name: Scene Selector
+    description: "Select scene to run, required in all modes.\nIf Special Scene is not enabled, never select None!"
+    required: true
+    selector:
+      select:
+        options:
+          - label: "Day"
+            value: "daytime"
+          - label: "Evening"
+            value: "eveningtime"
+          - label: "Night"
+            value: "nighttime"
+          - label: "Off"
+            value: "off"
+          - label: !input special_scene_name
+            value: "special_scene"
+    default: daytime
+  detect_deviation:
+    selector:
+      boolean: {}
+    default: false
+    name: Detect Deviation
+    description: Select to detect deviation from selected scene
+    required: true
+  specific_light:
+    name: Select specific light(s) for scene or detect deviation. 
+    description: "For deviation, this can be used in automation if light(s) change is set as trigger, trigger-entity_id variable can be leveraged to make runtime quicker.\nFor Scene it can be used to only affect specified light(s).\n"
+    required: false
+    selector:
+      select:
+        options:
+          - !input light_1_entity
+          - !input light_2_entity
+          - !input light_3_entity
+          - !input light_4_entity
+          - !input light_5_entity
+          - !input light_6_entity
+          - !input light_7_entity
+          - !input light_8_entity
+          - !input light_9_entity
+          - !input light_10_entity
+        multiple: true
+  exclude_light:
+    name: Exclude specific light(s) for scene or detect deviation. 
+    description: "This can be used if manual control of light is desired but settings remain in blueprint.\nOr for Scene it can be used to affect all light(s) except specified.\n"
+    required: false
+    selector:
+      select:
+        options:
+          - !input light_1_entity
+          - !input light_2_entity
+          - !input light_3_entity
+          - !input light_4_entity
+          - !input light_5_entity
+          - !input light_6_entity
+          - !input light_7_entity
+          - !input light_8_entity
+          - !input light_9_entity
+          - !input light_10_entity
+        multiple: true
+  transition_override:
+    name: Light Transition Override
+    description: "One time transition override.\nDefaults to blueprint set value\n"
+    required: true
+    default: !input transition
+    selector:
+      number:
+        min: 0
+        max: 3600
+
+sequence:
+  - alias: Set Global Variables
+    variables:
+      blueprint_transition: !input transition
+      transition: >
+        {% if (transition_override) is defined %}
+          {{ transition_override | int }}
+        {% else %}
+          {{ blueprint_transition | int }}
+        {% endif %}
+      brightness_counter_light_sensor: "{{ states(light_sensor) | round(0, default=0) | int }}"
+      light_1_entity: !input light_1_entity
+      light_2_entity: !input light_2_entity
+      light_3_entity: !input light_3_entity
+      light_4_entity: !input light_4_entity
+      light_5_entity: !input light_5_entity
+      light_6_entity: !input light_6_entity
+      light_7_entity: !input light_7_entity
+      light_8_entity: !input light_8_entity
+      light_9_entity: !input light_9_entity
+      light_10_entity: !input light_10_entity
+  - alias: Set time-based variables
+    choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ iif(scene_selection == 'daytime', true, false, false) }}"
+        sequence:
+          - variables:
+              brightness_counter: >
+                {% if (presence_override_daytime_enabled) %}
+                  {{ (states(override_daytime) | round(0, default=0) | int) + (states(presence_override_daytime) | round(0, default=0) | int) + (brightness_counter_light_sensor | round(0, default=0) | int) }}
+                {% else %}
+                  {{ (states(override_daytime) | round(0, default=0) | int) + (brightness_counter_light_sensor | round(0, default=0) | int) }}
+                {% endif %}
+              light_1_scene_method: !input light_1_scene_method_daytime
+              light_1_scene_data: !input light_1_scene_data_selector_daytime
+              light_1_brightness: "{{ light_1_brightness_daytime | int | round(0, default=0) }}"
+              light_1_rgb_color: !input light_1_rgb_color_daytime
+              light_1_temp: !input light_1_temp_daytime
+              light_1_theme: !input light_1_theme_daytime
+              light_1_scene: !input light_1_scene_daytime
+              light_2_scene_method: !input light_2_scene_method_daytime
+              light_2_scene_data: !input light_2_scene_data_selector_daytime
+              light_2_brightness: "{{ light_2_brightness_daytime | int | round(0, default=0) }}"
+              light_2_rgb_color: !input light_2_rgb_color_daytime
+              light_2_temp: !input light_2_temp_daytime
+              light_2_theme: !input light_2_theme_daytime
+              light_2_scene: !input light_2_scene_daytime
+              light_3_scene_method: !input light_3_scene_method_daytime
+              light_3_scene_data: !input light_3_scene_data_selector_daytime
+              light_3_brightness: "{{ light_3_brightness_daytime | int | round(0, default=0) }}"
+              light_3_rgb_color: !input light_3_rgb_color_daytime
+              light_3_temp: !input light_3_temp_daytime
+              light_3_theme: !input light_3_theme_daytime
+              light_3_scene: !input light_3_scene_daytime
+              light_4_scene_method: !input light_4_scene_method_daytime
+              light_4_scene_data: !input light_4_scene_data_selector_daytime
+              light_4_brightness: "{{ light_4_brightness_daytime | int | round(0, default=0) }}"
+              light_4_rgb_color: !input light_4_rgb_color_daytime
+              light_4_temp: !input light_4_temp_daytime
+              light_4_theme: !input light_4_theme_daytime
+              light_4_scene: !input light_4_scene_daytime
+              light_5_scene_method: !input light_5_scene_method_daytime
+              light_5_scene_data: !input light_5_scene_data_selector_daytime
+              light_5_brightness: "{{ light_5_brightness_daytime | int | round(0, default=0) }}"
+              light_5_rgb_color: !input light_5_rgb_color_daytime
+              light_5_temp: !input light_5_temp_daytime
+              light_5_theme: !input light_5_theme_daytime
+              light_5_scene: !input light_5_scene_daytime
+              light_6_scene_method: !input light_6_scene_method_daytime
+              light_6_scene_data: !input light_6_scene_data_selector_daytime
+              light_6_brightness: "{{ light_6_brightness_daytime | int | round(0, default=0) }}"
+              light_6_rgb_color: !input light_6_rgb_color_daytime
+              light_6_temp: !input light_6_temp_daytime
+              light_6_theme: !input light_6_theme_daytime
+              light_6_scene: !input light_6_scene_daytime
+              light_7_scene_method: !input light_7_scene_method_daytime
+              light_7_scene_data: !input light_7_scene_data_selector_daytime
+              light_7_brightness: "{{ light_7_brightness_daytime | int | round(0, default=0) }}"
+              light_7_rgb_color: !input light_7_rgb_color_daytime
+              light_7_temp: !input light_7_temp_daytime
+              light_7_theme: !input light_7_theme_daytime
+              light_7_scene: !input light_7_scene_daytime
+              light_8_scene_method: !input light_8_scene_method_daytime
+              light_8_scene_data: !input light_8_scene_data_selector_daytime
+              light_8_brightness: "{{ light_8_brightness_daytime | int | round(0, default=0) }}"
+              light_8_rgb_color: !input light_8_rgb_color_daytime
+              light_8_temp: !input light_8_temp_daytime
+              light_8_theme: !input light_8_theme_daytime
+              light_8_scene: !input light_8_scene_daytime
+              light_9_scene_method: !input light_9_scene_method_daytime
+              light_9_scene_data: !input light_9_scene_data_selector_daytime
+              light_9_brightness: "{{ light_9_brightness_daytime | int | round(0, default=0) }}"
+              light_9_rgb_color: !input light_9_rgb_color_daytime
+              light_9_temp: !input light_9_temp_daytime
+              light_9_theme: !input light_9_theme_daytime
+              light_9_scene: !input light_9_scene_daytime
+              light_10_scene_method: !input light_10_scene_method_daytime
+              light_10_scene_data: !input light_10_scene_data_selector_daytime
+              light_10_brightness: "{{ light_10_brightness_daytime | int | round(0, default=0) }}"
+              light_10_rgb_color: !input light_10_rgb_color_daytime
+              light_10_temp: !input light_10_temp_daytime
+              light_10_theme: !input light_10_theme_daytime
+              light_10_scene: !input light_10_scene_daytime
+        alias: Daytime
+      - conditions:
+          - condition: template
+            value_template: "{{ iif(scene_selection == 'eveningtime', true, false, false) }}"
+        sequence:
+          - variables:
+              brightness_counter: >
+                {% if (presence_override_eveningtime_enabled) %}
+                  {{ (states(override_eveningtime) | round(0, default=0) | int) + (states(presence_override_eveningtime) | round(0, default=0) | int) }}
+                {% else %}
+                  {{ states(override_eveningtime) | round(0, default=0) | int }}
+                {% endif %}
+              light_1_scene_method: !input light_1_scene_method_eveningtime
+              light_1_scene_data: !input light_1_scene_data_selector_eveningtime
+              light_1_brightness: "{{ light_1_brightness_eveningtime | int | round(0, default=0) }}"
+              light_1_rgb_color: !input light_1_rgb_color_eveningtime
+              light_1_temp: !input light_1_temp_eveningtime
+              light_1_theme: !input light_1_theme_eveningtime
+              light_1_scene: !input light_1_scene_eveningtime
+              light_2_scene_method: !input light_2_scene_method_eveningtime
+              light_2_scene_data: !input light_2_scene_data_selector_eveningtime
+              light_2_brightness: "{{ light_2_brightness_eveningtime | int | round(0, default=0) }}"
+              light_2_rgb_color: !input light_2_rgb_color_eveningtime
+              light_2_temp: !input light_2_temp_eveningtime
+              light_2_theme: !input light_2_theme_eveningtime
+              light_2_scene: !input light_2_scene_eveningtime
+              light_3_scene_method: !input light_3_scene_method_eveningtime
+              light_3_scene_data: !input light_3_scene_data_selector_eveningtime
+              light_3_brightness: "{{ light_3_brightness_eveningtime | int | round(0, default=0) }}"
+              light_3_rgb_color: !input light_3_rgb_color_eveningtime
+              light_3_temp: !input light_3_temp_eveningtime
+              light_3_theme: !input light_3_theme_eveningtime
+              light_3_scene: !input light_3_scene_eveningtime
+              light_4_scene_method: !input light_4_scene_method_eveningtime
+              light_4_scene_data: !input light_4_scene_data_selector_eveningtime
+              light_4_brightness: "{{ light_4_brightness_eveningtime | int | round(0, default=0) }}"
+              light_4_rgb_color: !input light_4_rgb_color_eveningtime
+              light_4_temp: !input light_4_temp_eveningtime
+              light_4_theme: !input light_4_theme_eveningtime
+              light_4_scene: !input light_4_scene_eveningtime
+              light_5_scene_method: !input light_5_scene_method_eveningtime
+              light_5_scene_data: !input light_5_scene_data_selector_eveningtime
+              light_5_brightness: "{{ light_5_brightness_eveningtime | int | round(0, default=0) }}"
+              light_5_rgb_color: !input light_5_rgb_color_eveningtime
+              light_5_temp: !input light_5_temp_eveningtime
+              light_5_theme: !input light_5_theme_eveningtime
+              light_5_scene: !input light_5_scene_eveningtime
+              light_6_scene_method: !input light_6_scene_method_eveningtime
+              light_6_scene_data: !input light_6_scene_data_selector_eveningtime
+              light_6_brightness: "{{ light_6_brightness_eveningtime | int | round(0, default=0) }}"
+              light_6_rgb_color: !input light_6_rgb_color_eveningtime
+              light_6_temp: !input light_6_temp_eveningtime
+              light_6_theme: !input light_6_theme_eveningtime
+              light_6_scene: !input light_6_scene_eveningtime
+              light_7_scene_method: !input light_7_scene_method_eveningtime
+              light_7_scene_data: !input light_7_scene_data_selector_eveningtime
+              light_7_brightness: "{{ light_7_brightness_eveningtime | int | round(0, default=0) }}"
+              light_7_rgb_color: !input light_7_rgb_color_eveningtime
+              light_7_temp: !input light_7_temp_eveningtime
+              light_7_theme: !input light_7_theme_eveningtime
+              light_7_scene: !input light_7_scene_eveningtime
+              light_8_scene_method: !input light_8_scene_method_eveningtime
+              light_8_scene_data: !input light_8_scene_data_selector_eveningtime
+              light_8_brightness: "{{ light_8_brightness_eveningtime | int | round(0, default=0) }}"
+              light_8_rgb_color: !input light_8_rgb_color_eveningtime
+              light_8_temp: !input light_8_temp_eveningtime
+              light_8_theme: !input light_8_theme_eveningtime
+              light_8_scene: !input light_8_scene_eveningtime
+              light_9_scene_method: !input light_9_scene_method_eveningtime
+              light_9_scene_data: !input light_9_scene_data_selector_eveningtime
+              light_9_brightness: "{{ light_9_brightness_eveningtime | int | round(0, default=0) }}"
+              light_9_rgb_color: !input light_9_rgb_color_eveningtime
+              light_9_temp: !input light_9_temp_eveningtime
+              light_9_theme: !input light_9_theme_eveningtime
+              light_9_scene: !input light_9_scene_eveningtime
+              light_10_scene_method: !input light_10_scene_method_eveningtime
+              light_10_scene_data: !input light_10_scene_data_selector_eveningtime
+              light_10_brightness: "{{ light_10_brightness_eveningtime | int | round(0, default=0) }}"
+              light_10_rgb_color: !input light_10_rgb_color_eveningtime
+              light_10_temp: !input light_10_temp_eveningtime
+              light_10_theme: !input light_10_theme_eveningtime
+              light_10_scene: !input light_10_scene_eveningtime
+        alias: Eveningtime
+      - conditions:
+          - condition: template
+            value_template: "{{ iif(scene_selection == 'nighttime', true, false, false) }}"
+        sequence:
+          - variables:
+              brightness_counter: >
+                {% if (presence_override_nighttime_enabled) %}
+                  {{ (states(override_nighttime) | round(0, default=0) | int) + (states(presence_override_nighttime) | round(0, default=0) | int) }}
+                {% else %}
+                  {{ states(override_nighttime) | round(0, default=0) | int }}
+                {% endif %}
+              light_1_scene_method: !input light_1_scene_method_nighttime
+              light_1_scene_data: !input light_1_scene_data_selector_nighttime
+              light_1_brightness: "{{ light_1_brightness_nighttime | int | round(0, default=0) }}"
+              light_1_rgb_color: !input light_1_rgb_color_nighttime
+              light_1_temp: !input light_1_temp_nighttime
+              light_1_theme: !input light_1_theme_nighttime
+              light_1_scene: !input light_1_scene_nighttime
+              light_2_scene_method: !input light_2_scene_method_nighttime
+              light_2_scene_data: !input light_2_scene_data_selector_nighttime
+              light_2_brightness: "{{ light_2_brightness_nighttime | int | round(0, default=0) }}"
+              light_2_rgb_color: !input light_2_rgb_color_nighttime
+              light_2_temp: !input light_2_temp_nighttime
+              light_2_theme: !input light_2_theme_nighttime
+              light_2_scene: !input light_2_scene_nighttime
+              light_3_scene_method: !input light_3_scene_method_nighttime
+              light_3_scene_data: !input light_3_scene_data_selector_nighttime
+              light_3_brightness: "{{ light_3_brightness_nighttime | int | round(0, default=0) }}"
+              light_3_rgb_color: !input light_3_rgb_color_nighttime
+              light_3_temp: !input light_3_temp_nighttime
+              light_3_theme: !input light_3_theme_nighttime
+              light_3_scene: !input light_3_scene_nighttime
+              light_4_scene_method: !input light_4_scene_method_nighttime
+              light_4_scene_data: !input light_4_scene_data_selector_nighttime
+              light_4_brightness: "{{ light_4_brightness_nighttime | int | round(0, default=0) }}"
+              light_4_rgb_color: !input light_4_rgb_color_nighttime
+              light_4_temp: !input light_4_temp_nighttime
+              light_4_theme: !input light_4_theme_nighttime
+              light_4_scene: !input light_4_scene_nighttime
+              light_5_scene_method: !input light_5_scene_method_nighttime
+              light_5_scene_data: !input light_5_scene_data_selector_nighttime
+              light_5_brightness: "{{ light_5_brightness_nighttime | int | round(0, default=0) }}"
+              light_5_rgb_color: !input light_5_rgb_color_nighttime
+              light_5_temp: !input light_5_temp_nighttime
+              light_5_theme: !input light_5_theme_nighttime
+              light_5_scene: !input light_5_scene_nighttime
+              light_6_scene_method: !input light_6_scene_method_nighttime
+              light_6_scene_data: !input light_6_scene_data_selector_nighttime
+              light_6_brightness: "{{ light_6_brightness_nighttime | int | round(0, default=0) }}"
+              light_6_rgb_color: !input light_6_rgb_color_nighttime
+              light_6_temp: !input light_6_temp_nighttime
+              light_6_theme: !input light_6_theme_nighttime
+              light_6_scene: !input light_6_scene_nighttime
+              light_7_scene_method: !input light_7_scene_method_nighttime
+              light_7_scene_data: !input light_7_scene_data_selector_nighttime
+              light_7_brightness: "{{ light_7_brightness_nighttime | int | round(0, default=0) }}"
+              light_7_rgb_color: !input light_7_rgb_color_nighttime
+              light_7_temp: !input light_7_temp_nighttime
+              light_7_theme: !input light_7_theme_nighttime
+              light_7_scene: !input light_7_scene_nighttime
+              light_8_scene_method: !input light_8_scene_method_nighttime
+              light_8_scene_data: !input light_8_scene_data_selector_nighttime
+              light_8_brightness: "{{ light_8_brightness_nighttime | int | round(0, default=0) }}"
+              light_8_rgb_color: !input light_8_rgb_color_nighttime
+              light_8_temp: !input light_8_temp_nighttime
+              light_8_theme: !input light_8_theme_nighttime
+              light_8_scene: !input light_8_scene_nighttime
+              light_9_scene_method: !input light_9_scene_method_nighttime
+              light_9_scene_data: !input light_9_scene_data_selector_nighttime
+              light_9_brightness: "{{ light_9_brightness_nighttime | int | round(0, default=0) }}"
+              light_9_rgb_color: !input light_9_rgb_color_nighttime
+              light_9_temp: !input light_9_temp_nighttime
+              light_9_theme: !input light_9_theme_nighttime
+              light_9_scene: !input light_9_scene_nighttime
+              light_10_scene_method: !input light_10_scene_method_nighttime
+              light_10_scene_data: !input light_10_scene_data_selector_nighttime
+              light_10_brightness: "{{ light_10_brightness_nighttime | int | round(0, default=0) }}"
+              light_10_rgb_color: !input light_10_rgb_color_nighttime
+              light_10_temp: !input light_10_temp_nighttime
+              light_10_theme: !input light_10_theme_nighttime
+              light_10_scene: !input light_10_scene_nighttime
+        alias: Nighttime
+      - conditions:
+          - condition: template
+            value_template: "{{ iif(scene_selection == 'special_scene', true, false, false) }}"
+        sequence:
+          - variables:
+              brightness_counter: >
+                {% if (presence_override_special_scene_enabled) %}
+                  {{ (states(override_special_scene) | round(0, default=0) | int) + (states(presence_override_special_scene) | round(0, default=0) | int) }}
+                {% else %}
+                  {{ states(override_special_scene) | round(0, default=0) | int }}
+                {% endif %}
+              light_1_scene_method: !input light_1_scene_method_special_scene
+              light_1_scene_data: !input light_1_scene_data_selector_special_scene
+              light_1_brightness: "{{ light_1_brightness_special_scene | int | round(0, default=0) }}"
+              light_1_rgb_color: !input light_1_rgb_color_special_scene
+              light_1_temp: !input light_1_temp_special_scene
+              light_1_theme: !input light_1_theme_special_scene
+              light_1_scene: !input light_1_scene_special_scene
+              light_2_scene_method: !input light_2_scene_method_special_scene
+              light_2_scene_data: !input light_2_scene_data_selector_special_scene
+              light_2_brightness: "{{ light_2_brightness_special_scene | int | round(0, default=0) }}"
+              light_2_rgb_color: !input light_2_rgb_color_special_scene
+              light_2_temp: !input light_2_temp_special_scene
+              light_2_theme: !input light_2_theme_special_scene
+              light_2_scene: !input light_2_scene_special_scene
+              light_3_scene_method: !input light_3_scene_method_special_scene
+              light_3_scene_data: !input light_3_scene_data_selector_special_scene
+              light_3_brightness: "{{ light_3_brightness_special_scene | int | round(0, default=0) }}"
+              light_3_rgb_color: !input light_3_rgb_color_special_scene
+              light_3_temp: !input light_3_temp_special_scene
+              light_3_theme: !input light_3_theme_special_scene
+              light_3_scene: !input light_3_scene_special_scene
+              light_4_scene_method: !input light_4_scene_method_special_scene
+              light_4_scene_data: !input light_4_scene_data_selector_special_scene
+              light_4_brightness: "{{ light_4_brightness_special_scene | int | round(0, default=0) }}"
+              light_4_rgb_color: !input light_4_rgb_color_special_scene
+              light_4_temp: !input light_4_temp_special_scene
+              light_4_theme: !input light_4_theme_special_scene
+              light_4_scene: !input light_4_scene_special_scene
+              light_5_scene_method: !input light_5_scene_method_special_scene
+              light_5_scene_data: !input light_5_scene_data_selector_special_scene
+              light_5_brightness: "{{ light_5_brightness_special_scene | int | round(0, default=0) }}"
+              light_5_rgb_color: !input light_5_rgb_color_special_scene
+              light_5_temp: !input light_5_temp_special_scene
+              light_5_theme: !input light_5_theme_special_scene
+              light_5_scene: !input light_5_scene_special_scene
+              light_6_scene_method: !input light_6_scene_method_special_scene
+              light_6_scene_data: !input light_6_scene_data_selector_special_scene
+              light_6_brightness: "{{ light_6_brightness_special_scene | int | round(0, default=0) }}"
+              light_6_rgb_color: !input light_6_rgb_color_special_scene
+              light_6_temp: !input light_6_temp_special_scene
+              light_6_theme: !input light_6_theme_special_scene
+              light_6_scene: !input light_6_scene_special_scene
+              light_7_scene_method: !input light_7_scene_method_special_scene
+              light_7_scene_data: !input light_7_scene_data_selector_special_scene
+              light_7_brightness: "{{ light_7_brightness_special_scene | int | round(0, default=0) }}"
+              light_7_rgb_color: !input light_7_rgb_color_special_scene
+              light_7_temp: !input light_7_temp_special_scene
+              light_7_theme: !input light_7_theme_special_scene
+              light_7_scene: !input light_7_scene_special_scene
+              light_8_scene_method: !input light_8_scene_method_special_scene
+              light_8_scene_data: !input light_8_scene_data_selector_special_scene
+              light_8_brightness: "{{ light_8_brightness_special_scene | int | round(0, default=0) }}"
+              light_8_rgb_color: !input light_8_rgb_color_special_scene
+              light_8_temp: !input light_8_temp_special_scene
+              light_8_theme: !input light_8_theme_special_scene
+              light_8_scene: !input light_8_scene_special_scene
+              light_9_scene_method: !input light_9_scene_method_special_scene
+              light_9_scene_data: !input light_9_scene_data_selector_special_scene
+              light_9_brightness: "{{ light_9_brightness_special_scene | int | round(0, default=0) }}"
+              light_9_rgb_color: !input light_9_rgb_color_special_scene
+              light_9_temp: !input light_9_temp_special_scene
+              light_9_theme: !input light_9_theme_special_scene
+              light_9_scene: !input light_9_scene_special_scene
+              light_10_scene_method: !input light_10_scene_method_special_scene
+              light_10_scene_data: !input light_10_scene_data_selector_special_scene
+              light_10_brightness: "{{ light_10_brightness_special_scene | int | round(0, default=0) }}"
+              light_10_rgb_color: !input light_10_rgb_color_special_scene
+              light_10_temp: !input light_10_temp_special_scene
+              light_10_theme: !input light_10_theme_special_scene
+              light_10_scene: !input light_10_scene_special_scene
+        alias: special_scene
+
+  - if:
+      - condition: template
+        value_template: "{{ iif(scene_selection != 'off', true, false, false) }}"
+    then:
+      - variables:
+          brightness_sum_light_1: |
+            {% if (light_1_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_1_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_1_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_1_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_2: |
+            {% if (light_2_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_2_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_2_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_2_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_3: |
+            {% if (light_3_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_3_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_3_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_3_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_4: |
+            {% if (light_4_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_4_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_4_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_4_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_5: |
+            {% if (light_5_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_5_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_5_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_5_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_6: |
+            {% if (light_6_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_6_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_6_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_6_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_7: |
+            {% if (light_7_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_7_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_7_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_7_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_8: |
+            {% if (light_8_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_8_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_8_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_8_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_9: |
+            {% if (light_9_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_9_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_9_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_9_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+          brightness_sum_light_10: |
+            {% if (light_10_entity) != none %}
+              {% if ((brightness_counter | round(0, default=0) | int) + (light_10_brightness | round(0, default=0) | int) >= 255) %}
+                {{ 255 | round(0, default=0) | int }}
+              {% elif ((brightness_counter | round(0, default=0) | int) + (light_10_brightness | round(0, default=0) | int) <= 0) %}
+                {{ 0 | round(0, default=0) | int }}
+              {% else %}
+                {{ (brightness_counter | round(0, default=0) | int) + (light_10_brightness | round(0, default=0) | int) }}
+              {% endif %}
+            {% else %}
+              {{ 'none' }}
+            {% endif %}
+        alias: Calculate lights final brightness values
+    alias: Only calculate brightness values if scene is not "off"
+
+  - variables:
+      lights_list: |
+        {% set ns = namespace (entity_list=[]) %}
+        {% set lights = [
+          { 
+            "entity": (light_1_entity | default('none')),
+            "brightness": (brightness_sum_light_1 | default('none')),
+            "scene_method": (light_1_scene_method | default('none')),
+            "scene_data": (light_1_scene_data | default('none')),
+            "rgb_color": (light_1_rgb_color | default('none')),
+            "temp": (light_1_temp | default('none')),
+            "theme": (light_1_theme | default('none')),
+            "scene": (light_1_scene | default('none'))
+          },
+          {
+            "entity": (light_2_entity | default('none')),
+            "brightness": (brightness_sum_light_2 | default('none')),
+            "scene_method": (light_2_scene_method | default('none')),
+            "scene_data": (light_2_scene_data | default('none')),
+            "rgb_color": (light_2_rgb_color | default('none')),
+            "temp": (light_2_temp | default('none')),
+            "theme": (light_2_theme | default('none')),
+            "scene": (light_2_scene | default('none'))
+          },
+          { 
+            "entity": (light_3_entity | default('none')),
+            "brightness": (brightness_sum_light_3 | default('none')),
+            "scene_method": (light_3_scene_method | default('none')),
+            "scene_data": (light_3_scene_data | default('none')),
+            "rgb_color": (light_3_rgb_color | default('none')),
+            "temp": (light_3_temp | default('none')),
+            "theme": (light_3_theme | default('none')),
+            "scene": (light_3_scene | default('none'))
+          },
+          { 
+            "entity": (light_4_entity | default('none')),
+            "brightness": (brightness_sum_light_4 | default('none')),
+            "scene_method": (light_4_scene_method | default('none')),
+            "scene_data": (light_4_scene_data | default('none')),
+            "rgb_color": (light_4_rgb_color | default('none')),
+            "temp": (light_4_temp | default('none')),
+            "theme": (light_4_theme | default('none')),
+            "scene": (light_4_scene | default('none'))
+          },
+          { 
+            "entity": (light_5_entity | default('none')),
+            "brightness": (brightness_sum_light_5 | default('none')),
+            "scene_method": (light_5_scene_method | default('none')),
+            "scene_data": (light_5_scene_data | default('none')),
+            "rgb_color": (light_5_rgb_color | default('none')),
+            "temp": (light_5_temp | default('none')),
+            "theme": (light_5_theme | default('none')),
+            "scene": (light_5_scene | default('none'))
+          },
+          { 
+            "entity": (light_6_entity | default('none')),
+            "brightness": (brightness_sum_light_6 | default('none')),
+            "scene_method": (light_6_scene_method | default('none')),
+            "scene_data": (light_6_scene_data | default('none')),
+            "rgb_color": (light_6_rgb_color | default('none')),
+            "temp": (light_6_temp | default('none')),
+            "theme": (light_6_theme | default('none')),
+            "scene": (light_6_scene | default('none'))
+          },
+          { 
+            "entity": (light_7_entity | default('none')),
+            "brightness": (brightness_sum_light_7 | default('none')),
+            "scene_method": (light_7_scene_method | default('none')),
+            "scene_data": (light_7_scene_data | default('none')),
+            "rgb_color": (light_7_rgb_color | default('none')),
+            "temp": (light_7_temp | default('none')),
+            "theme": (light_7_theme | default('none')),
+            "scene": (light_7_scene | default('none'))
+          },
+          { 
+            "entity": (light_8_entity | default('none')),
+            "brightness": (brightness_sum_light_8 | default('none')),
+            "scene_method": (light_8_scene_method | default('none')),
+            "scene_data": (light_8_scene_data | default('none')),
+            "rgb_color": (light_8_rgb_color | default('none')),
+            "temp": (light_8_temp | default('none')),
+            "theme": (light_8_theme | default('none')),
+            "scene": (light_8_scene | default('none'))
+          },
+          { 
+            "entity": (light_9_entity | default('none')),
+            "brightness": (brightness_sum_light_9 | default('none')),
+            "scene_method": (light_9_scene_method | default('none')),
+            "scene_data": (light_9_scene_data | default('none')),
+            "rgb_color": (light_9_rgb_color | default('none')),
+            "temp": (light_9_temp | default('none')),
+            "theme": (light_9_theme | default('none')),
+            "scene": (light_9_scene | default('none'))
+          },
+          { 
+            "entity": (light_10_entity | default('none')),
+            "brightness": (brightness_sum_light_10 | default('none')),
+            "scene_method": (light_10_scene_method | default('none')),
+            "scene_data": (light_10_scene_data | default('none')),
+            "rgb_color": (light_10_rgb_color | default('none')),
+            "temp": (light_10_temp | default('none')),
+            "theme": (light_10_theme | default('none')),
+            "scene": (light_10_scene | default('none'))
+          }
+        ] %}
+        {% for light in lights %}
+          {% if exclude_light is defined and exclude_light != 'none' %}
+            {% if light.entity != 'none' and light.entity not in exclude_light %}
+              {% set ns.entity_list = ns.entity_list + [light] %}
+            {% endif %}
+          {% elif specific_light is defined and specific_light != 'none' %}
+            {% if light.entity != 'none' and light.entity in specific_light %}
+              {% set ns.entity_list = ns.entity_list + [light] %}
+            {% endif %}
+          {% elif light.entity != 'none' %}
+            {% set ns.entity_list = ns.entity_list + [light] %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.entity_list }}
+    alias: Set Array with values after defined
+  - choose:
+      - conditions:
+          - condition: not
+            conditions:
+              - condition: template
+                value_template: "{{ iif(scene_selection == 'off', true, false, false) }}"
+              - condition: template
+                value_template: "{{ detect_deviation }}"
+        sequence:
+          - repeat:
+              for_each: "{{ lights_list }}"
+              sequence:
+                - alias: Set Lights
+                  choose:
+                    - conditions:
+                        - condition: template
+                          value_template: |-
+                            {% if (repeat.item.theme) != 'none' %}
+                              true
+                            {% else %}
+                              false
+                            {% endif %}
+                      sequence:
+                        - alias: Catch if light has only theme set (no color)
+                          if:
+                            - condition: template
+                              value_template: |-
+                                {% if (repeat.item.rgb_color) == 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                          then:
+                            - alias: >-
+                                Catch if light entity contains Nanoleaf and do
+                                two-shot apply, (avoids flash)
+                              if:
+                                - condition: template
+                                  value_template: >-
+                                    {% set device =
+                                    device_id(repeat.item.entity) %}
+
+                                    {{ 'true' if device_attr((device),
+                                    'manufacturer') == 'Nanoleaf' else 'false'
+                                    }}
+                              then:
+                                - sequence:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        effect: "{{ repeat.item.theme }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                  alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    Nanoleaf
+                              else:
+                                - action: light.turn_on
+                                  metadata: {}
+                                  data:
+                                    transition: "{{ transition }}"
+                                    effect: "{{ repeat.item.theme }}"
+                                    brightness: "{{ repeat.item.brightness }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.entity }}"
+                          else:
+                            - alias: >-
+                                Catch if light entity contains Nanoleaf and do
+                                two-shot apply, (avoids flash)
+                              if:
+                                - condition: template
+                                  value_template: >-
+                                    {% set device =
+                                    device_id(repeat.item.entity) %}
+
+                                    {{ 'true' if device_attr((device),
+                                    'manufacturer') == 'Nanoleaf' else 'false'
+                                    }}
+                              then:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    Nanoleaf
+                                  sequence:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        rgb_color: "{{ repeat.item.rgb_color }}"
+                                        effect: "{{ repeat.item.theme }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              else:
+                                - action: light.turn_on
+                                  metadata: {}
+                                  data:
+                                    transition: "{{ transition }}"
+                                    rgb_color: "{{ repeat.item.rgb_color }}"
+                                    effect: "{{ repeat.item.theme }}"
+                                    brightness: "{{ repeat.item.brightness }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.entity }}"
+                      alias: Brightness, color and theme
+                    - conditions:
+                        - condition: template
+                          value_template: >-
+                            {% if (repeat.item.rgb_color) != 'none' or
+                            (repeat.item.temp) != 'none' %}
+                              true
+                            {% else %}
+                              false
+                            {% endif %}
+                      sequence:
+                        - choose:
+                            - conditions:
+                                - condition: template
+                                  value_template: |-
+                                    {% if (repeat.item.rgb_color) != 'none' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    IKEA
+                                  if:
+                                    - condition: template
+                                      value_template: >-
+                                        {% set device =
+                                        device_id(repeat.item.entity) %}
+
+                                        {{ 'true' if device_attr((device),
+                                        'manufacturer') == 'IKEA' else 'false'
+                                        }}
+                                  then:
+                                    - sequence:
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            rgb_color: "{{ repeat.item.rgb_color }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            transition: "{{ transition }}"
+                                            brightness: "{{ repeat.item.brightness }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                      alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                  else:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                        rgb_color: "{{ repeat.item.rgb_color }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              alias: RGB Color
+                            - conditions:
+                                - condition: template
+                                  value_template: |-
+                                    {% if (repeat.item.temp) != 'none' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    IKEA
+                                  if:
+                                    - condition: template
+                                      value_template: >-
+                                        {% set device =
+                                        device_id(repeat.item.entity) %}
+
+                                        {{ 'true' if device_attr((device),
+                                        'manufacturer') == 'IKEA' else 'false'
+                                        }}
+                                  then:
+                                    - alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                      sequence:
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            color_temp_kelvin: "{{ repeat.item.temp }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            transition: "{{ transition }}"
+                                            brightness: "{{ repeat.item.brightness }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                  else:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                        color_temp_kelvin: "{{ repeat.item.temp }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              alias: Temperature
+                      alias: Brightness and Color or Temperature
+                    - conditions:
+                        - condition: template
+                          value_template: >-
+                            {% if (repeat.item.brightness) != 'none' and
+                            (repeat.item.scene_method) == 'none' and
+                            (repeat.item.theme) == 'none' %}
+                              true
+                            {% else %}
+                              false
+                            {% endif %}
+                      sequence:
+                        - action: light.turn_on
+                          metadata: {}
+                          data:
+                            transition: "{{ transition }}"
+                            brightness: "{{ repeat.item.brightness }}"
+                          target:
+                            entity_id: "{{ repeat.item.entity }}"
+                      alias: Only brightness
+                    - conditions:
+                        - condition: template
+                          value_template: |-
+                            {% if (repeat.item.scene_method) != 'none' %}
+                              true
+                            {% else %}
+                              false
+                            {% endif %}
+                      sequence:
+                        - alias: Apply scene
+                          choose:
+                            - conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if (repeat.item.scene_method) ==
+                                    'scene_action' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - action: scene.turn_on
+                                  data:
+                                    transition: "{{ transition }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.scene }}"
+                              alias: "Scene Method: Scene_Action"
+                            - conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if (repeat.item.scene_method) ==
+                                    'selector' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - action: select.select_option
+                                  metadata: {}
+                                  data:
+                                    option: "{{ repeat.item.scene }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.scene_data }}"
+                              alias: "Scene Method: Select"
+                        - action: light.turn_on
+                          metadata: {}
+                          data:
+                            transition: "{{ transition }}"
+                            brightness: "{{ repeat.item.brightness }}"
+                          target:
+                            entity_id: "{{ repeat.item.entity }}"
+                      alias: Brightness, color and scene
+        alias: Set lights
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: template
+                value_template: "{{ iif(scene_selection == 'off', true, false, false) }}"
+              - condition: not
+                conditions:
+                  - condition: template
+                    value_template: "{{ detect_deviation }}"
+        sequence:
+          - repeat:
+              for_each: "{{ lights_list }}"
+              sequence:
+                - action: light.turn_off
+                  metadata: {}
+                  data:
+                    transition: "{{ transition }}"
+                  target:
+                    entity_id: "{{ repeat.item.entity }}"
+        alias: "Off"
+      - conditions:
+          - condition: template
+            value_template: "{{ detect_deviation }}"
+        sequence:
+          - repeat:
+              for_each: "{{ lights_list }}"
+              sequence:
+                - alias: Check and set lights as needed
+                  choose:
+                    - conditions:
+                        - condition: and
+                          conditions:
+                            - condition: template
+                              value_template: >-
+                                {% if (repeat.item.theme) != 'none' and
+                                (repeat.item.scene_method) == 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                            - condition: or
+                              conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'brightness') != (repeat.item.brightness) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'rgb_color') != (repeat.item.rgb_color) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'effect') != (repeat.item.theme) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                      sequence:
+                        - alias: Catch if light has only theme set (no color)
+                          if:
+                            - condition: template
+                              value_template: |-
+                                {% if (repeat.item.rgb_color) == 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                          then:
+                            - alias: >-
+                                Catch if light entity contains Nanoleaf and do
+                                two-shot apply, (avoids flash)
+                              if:
+                                - condition: template
+                                  value_template: >-
+                                    {% set device =
+                                    device_id(repeat.item.entity) %}
+
+                                    {{ 'true' if device_attr((device),
+                                    'manufacturer') == 'Nanoleaf' else 'false'
+                                    }}
+                              then:
+                                - sequence:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        effect: "{{ repeat.item.theme }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                  alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    Nanoleaf
+                              else:
+                                - action: light.turn_on
+                                  metadata: {}
+                                  data:
+                                    transition: "{{ transition }}"
+                                    effect: "{{ repeat.item.theme }}"
+                                    brightness: "{{ repeat.item.brightness }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.entity }}"
+                          else:
+                            - alias: >-
+                                Catch if light entity contains Nanoleaf and do
+                                two-shot apply, (avoids flash)
+                              if:
+                                - condition: template
+                                  value_template: >-
+                                    {% set device =
+                                    device_id(repeat.item.entity) %}
+
+                                    {{ 'true' if device_attr((device),
+                                    'manufacturer') == 'Nanoleaf' else 'false'
+                                    }}
+                              then:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    Nanoleaf
+                                  sequence:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        rgb_color: "{{ repeat.item.rgb_color }}"
+                                        effect: "{{ repeat.item.theme }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              else:
+                                - action: light.turn_on
+                                  metadata: {}
+                                  data:
+                                    transition: "{{ transition }}"
+                                    rgb_color: "{{ repeat.item.rgb_color }}"
+                                    effect: "{{ repeat.item.theme }}"
+                                    brightness: "{{ repeat.item.brightness }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.entity }}"
+                      alias: Brightness, color and theme
+                    - conditions:
+                        - condition: and
+                          conditions:
+                            - condition: template
+                              value_template: >-
+                                {% if (repeat.item.rgb_color) != 'none' or
+                                (repeat.item.temp) != 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                            - condition: or
+                              conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'brightness') != (repeat.item.brightness) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'rgb_color') != (repeat.item.rgb_color) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'color_temp_kelvin') != (repeat.item.temp)
+                                    %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                      sequence:
+                        - choose:
+                            - conditions:
+                                - condition: template
+                                  value_template: |-
+                                    {% if (repeat.item.rgb_color) != 'none' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    IKEA
+                                  if:
+                                    - condition: template
+                                      value_template: >-
+                                        {% set device =
+                                        device_id(repeat.item.entity) %}
+
+                                        {{ 'true' if device_attr((device),
+                                        'manufacturer') == 'IKEA' else 'false'
+                                        }}
+                                  then:
+                                    - sequence:
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            rgb_color: "{{ repeat.item.rgb_color }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            transition: "{{ transition }}"
+                                            brightness: "{{ repeat.item.brightness }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                      alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                  else:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                        rgb_color: "{{ repeat.item.rgb_color }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              alias: RGB Color
+                            - conditions:
+                                - condition: template
+                                  value_template: |-
+                                    {% if (repeat.item.temp) != 'none' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - alias: >-
+                                    Two-Shot Sequence to handle some lights, ex.
+                                    IKEA
+                                  if:
+                                    - condition: template
+                                      value_template: >-
+                                        {% set device =
+                                        device_id(repeat.item.entity) %}
+
+                                        {{ 'true' if device_attr((device),
+                                        'manufacturer') == 'IKEA' else 'false'
+                                        }}
+                                  then:
+                                    - alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                      sequence:
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            color_temp_kelvin: "{{ repeat.item.temp }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                        - action: light.turn_on
+                                          metadata: {}
+                                          data:
+                                            transition: "{{ transition }}"
+                                            brightness: "{{ repeat.item.brightness }}"
+                                          target:
+                                            entity_id: "{{ repeat.item.entity }}"
+                                  else:
+                                    - action: light.turn_on
+                                      metadata: {}
+                                      data:
+                                        transition: "{{ transition }}"
+                                        brightness: "{{ repeat.item.brightness }}"
+                                        color_temp_kelvin: "{{ repeat.item.temp }}"
+                                      target:
+                                        entity_id: "{{ repeat.item.entity }}"
+                              alias: Temperature
+                      alias: Brightness and Color or Temperature
+                    - conditions:
+                        - condition: and
+                          conditions:
+                            - condition: template
+                              value_template: |-
+                                {% if (repeat.item.brightness) != 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                            - condition: template
+                              value_template: >-
+                                {% if state_attr(repeat.item.entity,
+                                'brightness') != (repeat.item.brightness) %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                      sequence:
+                        - action: light.turn_on
+                          metadata: {}
+                          data:
+                            transition: "{{ transition }}"
+                            brightness: "{{ repeat.item.brightness }}"
+                          target:
+                            entity_id: "{{ repeat.item.entity }}"
+                      alias: Only brightness
+                    - conditions:
+                        - condition: and
+                          conditions:
+                            - condition: template
+                              value_template: >-
+                                {% if (repeat.item.theme) == 'none' and
+                                (repeat.item.scene_method) != 'none' %}
+                                  true
+                                {% else %}
+                                  false
+                                {% endif %}
+                            - condition: or
+                              conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'brightness') != (repeat.item.brightness) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if state_attr(repeat.item.entity,
+                                    'rgb_color') != (repeat.item.rgb_color) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                                - condition: template
+                                  value_template: >-
+                                    {% if (repeat.item.scene_method) == 'select'
+                                    and states(repeat.item.scene_data) !=
+                                    (repeat.item.scene) %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                      sequence:
+                        - alias: Apply scene
+                          choose:
+                            - conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if (repeat.item.scene_method) ==
+                                    'scene_action' %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - action: scene.turn_on
+                                  data:
+                                    transition: "{{ transition }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.scene }}"
+                              alias: "Scene Method: Scene_Action"
+                            - conditions:
+                                - condition: template
+                                  value_template: >-
+                                    {% if (repeat.item.scene_method) == 'select'
+                                    %}
+                                      true
+                                    {% else %}
+                                      false
+                                    {% endif %}
+                              sequence:
+                                - action: select.select_option
+                                  metadata: {}
+                                  data:
+                                    option: "{{ repeat.item.scene }}"
+                                  target:
+                                    entity_id: "{{ repeat.item.scene_data }}"
+                              alias: "Scene Method: Select"
+                        - action: light.turn_on
+                          metadata: {}
+                          data:
+                            transition: "{{ transition }}"
+                            brightness: "{{ repeat.item.brightness }}"
+                          target:
+                            entity_id: "{{ repeat.item.entity }}"
+                      alias: Brightness, color and scene
+        alias: Detect Deviation
+description: ""
+mode: restart
