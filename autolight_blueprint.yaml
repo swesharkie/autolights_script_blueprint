@@ -3754,7 +3754,26 @@ sequence:
                                         'manufacturer') == 'IKEA' else 'false'
                                         }}
                                   then:
-                                    - sequence:
+                                    - alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                      sequence:
+                                        - alias: >-
+                                            If light is off, first turn on to
+                                            minimum brightness so transition is
+                                            honored
+                                          if:
+                                            - condition: template
+                                              value_template: >-
+                                                {{ 'true' if states(repeat.item.entity)
+                                                == 'off' else 'false' }}
+                                          then:
+                                            - action: light.turn_on
+                                              metadata: {}
+                                              data:
+                                                brightness: 1
+                                              target:
+                                                entity_id: "{{ repeat.item.entity }}"
                                         - action: light.turn_on
                                           metadata: {}
                                           data:
@@ -3768,9 +3787,6 @@ sequence:
                                             brightness: "{{ repeat.item.brightness }}"
                                           target:
                                             entity_id: "{{ repeat.item.entity }}"
-                                      alias: >-
-                                        Two-Shot Sequence to handle some lights,
-                                        ex. IKEA
                                   else:
                                     - action: light.turn_on
                                       metadata: {}
@@ -3807,6 +3823,22 @@ sequence:
                                         Two-Shot Sequence to handle some lights,
                                         ex. IKEA
                                       sequence:
+                                        - alias: >-
+                                            If light is off, first turn on to
+                                            minimum brightness so transition is
+                                            honored
+                                          if:
+                                            - condition: template
+                                              value_template: >-
+                                                {{ 'true' if states(repeat.item.entity)
+                                                == 'off' else 'false' }}
+                                          then:
+                                            - action: light.turn_on
+                                              metadata: {}
+                                              data:
+                                                brightness: 1
+                                              target:
+                                                entity_id: "{{ repeat.item.entity }}"
                                         - action: light.turn_on
                                           metadata: {}
                                           data:
@@ -4128,7 +4160,26 @@ sequence:
                                         'manufacturer') == 'IKEA' else 'false'
                                         }}
                                   then:
-                                    - sequence:
+                                    - alias: >-
+                                        Two-Shot Sequence to handle some lights,
+                                        ex. IKEA
+                                      sequence:
+                                        - alias: >-
+                                            If light is off, first turn on to
+                                            minimum brightness so transition is
+                                            honored
+                                          if:
+                                            - condition: template
+                                              value_template: >-
+                                                {{ 'true' if states(repeat.item.entity)
+                                                == 'off' else 'false' }}
+                                          then:
+                                            - action: light.turn_on
+                                              metadata: {}
+                                              data:
+                                                brightness: 1
+                                              target:
+                                                entity_id: "{{ repeat.item.entity }}"
                                         - action: light.turn_on
                                           metadata: {}
                                           data:
@@ -4142,9 +4193,6 @@ sequence:
                                             brightness: "{{ repeat.item.brightness }}"
                                           target:
                                             entity_id: "{{ repeat.item.entity }}"
-                                      alias: >-
-                                        Two-Shot Sequence to handle some lights,
-                                        ex. IKEA
                                   else:
                                     - action: light.turn_on
                                       metadata: {}
@@ -4181,6 +4229,22 @@ sequence:
                                         Two-Shot Sequence to handle some lights,
                                         ex. IKEA
                                       sequence:
+                                        - alias: >-
+                                            If light is off, first turn on to
+                                            minimum brightness so transition is
+                                            honored
+                                          if:
+                                            - condition: template
+                                              value_template: >-
+                                                {{ 'true' if states(repeat.item.entity)
+                                                == 'off' else 'false' }}
+                                          then:
+                                            - action: light.turn_on
+                                              metadata: {}
+                                              data:
+                                                brightness: 1
+                                              target:
+                                                entity_id: "{{ repeat.item.entity }}"
                                         - action: light.turn_on
                                           metadata: {}
                                           data:
